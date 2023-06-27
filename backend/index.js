@@ -14,13 +14,14 @@ const pool = new Pool({
   database: process.env.DB_NAME,
 });
 
-router.get("/", function (req, res, next) {
-  res.sendFile(path.join(__dirname, "../frontend", "index.html"));
-});
-// router.get("/", (req, res) => {
-//   const filePath = path.join(__dirname, "../frontend", "index.html");
-//   res.sendFile(filePath);
+// router.get("/", function (req, res, next) {
+//   res.sendFile(path.join(__dirname, "../frontend", "index.html"));
 // });
+router.get("/", (req, res) => {
+  const filePath = path.join(__dirname, "../frontend", "index.html");
+  res.sendFile(filePath);
+  console.log("File path:", filePath);
+});
 
 // Use the pool to execute queries
 router.get("/data", (req, res) => {

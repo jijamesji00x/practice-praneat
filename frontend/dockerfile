@@ -1,3 +1,5 @@
 FROM nginx
-WORKDIR /frontend
-COPY . .
+
+COPY . /frontend
+
+EXPOSE 80
