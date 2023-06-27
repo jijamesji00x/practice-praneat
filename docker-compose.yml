@@ -1,6 +1,7 @@
 version: "3.8"
 services:
   app:
+    restart: always
     build: ./backend
     ports:
       - "3000:3000"
@@ -11,6 +12,7 @@ services:
     networks:
       - mynet
     command: node index.js
+
   db:
     image: postgres:latest
     environment:
