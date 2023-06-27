@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const router = express.Router();
 const port = 3000; // Choose any available port number
 const path = require("path");
 require("dotenv").config();
@@ -13,13 +14,16 @@ const pool = new Pool({
   database: process.env.DB_NAME,
 });
 
-app.get("/", (req, res) => {
-  const filePath = path.join(__dirname, "../frontend", "index.html");
-  res.sendFile(filePath);
+router.get("/", function (req, res, next) {
+  res.sendFile(path.join(__dirname, "../frontend", "index.html"));
 });
+// router.get("/", (req, res) => {
+//   const filePath = path.join(__dirname, "../frontend", "index.html");
+//   res.sendFile(filePath);
+// });
 
 // Use the pool to execute queries
-app.get("/data", (req, res) => {
+router.get("/data", (req, res) => {
   const query = "SELECT * FROM country_and_capitals";
 
   pool.query(query, (err, result) => {
@@ -28,10 +32,11 @@ app.get("/data", (req, res) => {
       res.status(500).json({ error: "An error occurred" });
     } else {
       res.json(result.rows);
+      res.send(result.rows);
     }
   });
 });
-
+app.use("/", router);
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
