@@ -13,6 +13,11 @@ const pool = new Pool({
   database: process.env.DB_NAME,
 });
 
+app.get("/", (req, res) => {
+  const filePath = path.join(__dirname, "../frontend", "index.html");
+  res.sendFile(filePath);
+});
+
 // Use the pool to execute queries
 app.get("/data", (req, res) => {
   const query = "SELECT * FROM country_and_capitals";
@@ -26,11 +31,6 @@ app.get("/data", (req, res) => {
     }
   });
 });
-
-// app.get("/", (req, res) => {
-//   const filePath = path.join(__dirname, "../frontend/index.html");
-//   res.sendFile(filePath);
-// });
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

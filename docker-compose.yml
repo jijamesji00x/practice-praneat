@@ -1,9 +1,18 @@
 version: "3.8"
 services:
+  web:
+    restart: always
+    build: ./frontend
+    ports:
+      - "8080:8080"
+    networks:
+      - mynet
+    depends_on:
+      - app
+
   app:
     restart: always
     build: ./backend
-
     ports:
       - "3000:3000"
     env_file:
