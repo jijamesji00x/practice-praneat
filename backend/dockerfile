@@ -1,14 +1,16 @@
+# Use a base image for your backend (e.g., Node.js)
 FROM node:14
 
+# Set the working directory in the container
 WORKDIR /backend
 
-COPY package.json .
-COPY package-lock.json .
+# Copy package.json and package-lock.json to the container
+COPY package*.json ./
 
+# Install backend dependencies
 RUN npm install
 
+# Copy the backend source code to the container
 COPY . .
-
-EXPOSE 3000
 
 

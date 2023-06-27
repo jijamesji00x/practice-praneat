@@ -1,5 +1,9 @@
+# Use a base image with Python and Flask preinstalled
 FROM nginx
 
-COPY . /frontend
+# Copy the index.html file to the /app folder
+COPY index.html /usr/share/nginx/html
 
 EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
+
