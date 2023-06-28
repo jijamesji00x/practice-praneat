@@ -13,17 +13,23 @@ const pool = new Pool({
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
 });
+// Serve static files from the frontend directory
+router.use(express.static(path.join(__dirname, "../frontend")));
 
-router.get("/", function (req, res, next) {
-  res.sendFile(path.join(__dirname, "../usr/share/nginx/html", "index.html"));
+// Handle requests for the index.html file
+router.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend", "index.html"));
 });
+// router.get("/", function (req, res, next) {
+//   res.sendFile(path.join(__dirname, "../usr/share/nginx/html", "index.html"));
+// });
 // router.get("/", (req, res) => {
 //   const filePath = path.join(__dirname, "../frontend", "index.html");
 //   res.sendFile(filePath);
 // });
 
 // Use the pool to execute queries
-router.get("/data", (req, res) => {
+app.get("/data", (req, res) => {
   const query = "SELECT * FROM country_and_capitals";
 
   pool.query(query, (err, result) => {

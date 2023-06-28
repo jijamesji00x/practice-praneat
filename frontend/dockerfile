@@ -1,11 +1,23 @@
-# Use an official web server image as the base image
-FROM nginx:latest
+# Use an official Node.js runtime as the base image
+FROM node:14
 
-# Copy the HTML file to the default document root directory of Nginx
-COPY index.html /usr/share/nginx/html
+# Set the working directory in the container
+WORKDIR /app
 
-# Expose port 80 (default port for HTTP traffic)
-EXPOSE 80
+# Copy package.json and package-lock.json to the working directory
+COPY package*.json ./
 
-# Start the Nginx server when the container is run
-CMD ["nginx", "-g", "daemon off;"]
+# Install dependencies
+RUN npm install
+
+# Copy the entire frontend directory to the working directory
+COPY . .
+
+# Build the frontend application (replace 'build' with your build command if different)
+RUN npm run build
+
+# Expose the port that the frontend will run on (assuming it's running on port 3000)
+EXPOSE 3000
+
+# Start the frontend server (replace 'start' with your server start command if different)
+CMD ["npm", "start"]
