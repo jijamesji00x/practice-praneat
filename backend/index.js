@@ -15,7 +15,7 @@ const pool = new Pool({
 });
 
 router.get("/", function (req, res, next) {
-  res.sendFile(path.join(__dirname, "../frontend", "index.html"));
+  res.sendFile(path.join(__dirname, "../usr/share/nginx/html", "index.html"));
 });
 // router.get("/", (req, res) => {
 //   const filePath = path.join(__dirname, "../frontend", "index.html");
