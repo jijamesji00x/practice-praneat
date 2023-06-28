@@ -1,13 +1,13 @@
 version: "3.8"
 services:
-  web:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    ports:
-      - "8000:80"
-    links:
-      - app
+  # web:
+  #   build:
+  #     context: ./frontend
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "8000:80"
+  #   links:
+  #     - app
 
   app:
     restart: always
