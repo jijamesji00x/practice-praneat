@@ -1,8 +1,11 @@
 const express = require("express");
 const app = express();
 const router = express.Router();
+const cors = require("cors");
 const port = 3000; // Choose any available port number
 const path = require("path");
+
+app.use(cors());
 require("dotenv").config();
 const { Pool } = require("pg");
 
@@ -16,10 +19,17 @@ const pool = new Pool({
 // Serve static files from the frontend directory
 router.use(express.static(path.join(__dirname, "../frontend")));
 
-// Handle requests for the index.html file
-router.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "../frontend", "index.html"));
+pool.query("SELECT NOW()", (err, res) => {
+  if (err) {
+    console.error("Error connecting to the database", err);
+  } else {
+    console.log("Connected to the database");
+  }
 });
+// Handle requests for the index.html file
+// router.get("/", (req, res) => {
+//   res.sendFile(path.join(__dirname, "../frontend", "index.html"));
+// });
 // router.get("/", function (req, res, next) {
 //   res.sendFile(path.join(__dirname, "../usr/share/nginx/html", "index.html"));
 // });
@@ -27,9 +37,13 @@ router.get("/", (req, res) => {
 //   const filePath = path.join(__dirname, "../frontend", "index.html");
 //   res.sendFile(filePath);
 // });
-
+app.get("/api", (req, res) => {
+  // Handle the API request and send a response
+  const responseData = { message: "API response" };
+  res.json(responseData);
+});
 // Use the pool to execute queries
-app.get("/data", (req, res) => {
+router.get("/data", (req, res) => {
   const query = "SELECT * FROM country_and_capitals";
 
   pool.query(query, (err, result) => {
@@ -38,7 +52,7 @@ app.get("/data", (req, res) => {
       res.status(500).json({ error: "An error occurred" });
     } else {
       res.json(result.rows);
-      res.send(result.rows);
+      //res.send(result.rows);
     }
   });
 });

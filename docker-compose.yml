@@ -1,12 +1,11 @@
 version: "3.8"
 services:
   web:
-    image: nginx:latest
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
     ports:
       - 80:80
-    volumes:
-      - ./frontend:/usr/share/nginx/html
-    restart: always
     networks:
       - mynet
 
@@ -15,7 +14,6 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-
     ports:
       - "3000:3000"
     env_file:
@@ -26,7 +24,6 @@ services:
       - db
     networks:
       - mynet
-    command: node index.js
 
   db:
     image: postgres:latest
