@@ -4,7 +4,6 @@ const router = express.Router();
 const cors = require("cors");
 const port = 3000; // Choose any available port number
 const path = require("path");
-
 app.use(cors());
 require("dotenv").config();
 const { Pool } = require("pg");

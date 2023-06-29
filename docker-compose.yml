@@ -37,5 +37,6 @@ services:
       - ./sql_scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - mynet
+
 networks:
   mynet:
