@@ -36,11 +36,6 @@ pool.query("SELECT NOW()", (err, res) => {
 //   const filePath = path.join(__dirname, "../frontend", "index.html");
 //   res.sendFile(filePath);
 // });
-app.get("/api", (req, res) => {
-  // Handle the API request and send a response
-  const responseData = { message: "API response" };
-  res.json(responseData);
-});
 // Use the pool to execute queries
 router.get("/data", (req, res) => {
   const query = "SELECT * FROM country_and_capitals";
