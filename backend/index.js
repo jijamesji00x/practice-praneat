@@ -9,22 +9,23 @@ require("dotenv").config();
 const { Pool } = require("pg");
 
 const pool = new Pool({
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
+  host: process.env.POSTGRES_HOST,
+  port: process.env.POSTGRES_PORT,
+  user: process.env.POSTGRES_USER,
+  password: process.env.POSTGRES_PASSWORD,
+  database: process.env.POSTGRES_DB,
 });
+
 // Serve static files from the frontend directory
 router.use(express.static(path.join(__dirname, "../frontend")));
 
-pool.query("SELECT NOW()", (err, res) => {
-  if (err) {
-    console.error("Error connecting to the database", err);
-  } else {
-    console.log("Connected to the database");
-  }
-});
+// pool.query("SELECT NOW()", (err, res) => {
+//   if (err) {
+//     console.error("Error connecting to the database", err);
+//   } else {
+//     console.log("Connected to the database");
+//   }
+// });
 // Handle requests for the index.html file
 // router.get("/", (req, res) => {
 //   res.sendFile(path.join(__dirname, "../frontend", "index.html"));

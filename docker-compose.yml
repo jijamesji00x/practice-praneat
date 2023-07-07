@@ -5,9 +5,10 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     ports:
+      - 8080:8080
       - 80:80
     networks:
-      - mynet
+      - mynet-app
 
   app:
     restart: always
@@ -18,25 +19,29 @@ services:
       - "3000:3000"
     env_file:
       - ./backend/.env
-    environment:
-      - NODE_ENV=development
+    # environment:
+    #   - NODE_ENV=development
     links:
       - db
     networks:
-      - mynet
+      - mynet-app
+      - mynet-db
 
   db:
     image: postgres:latest
-    environment:
-      - POSTGRES_DB=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=mypassword
+    env_file:
+      - ./backend/.env
+    # environment:
+    #   # - POSTGRES_DB=postgres
+    #   # - POSTGRES_USER=postgres
+    #   - POSTGRES_PASSWORD=mypassword
     ports:
       - 5432:5432
     volumes:
       - ./sql_scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
-      - mynet
+      - mynet-db
 
 networks:
-  mynet:
+  mynet-app:
+  mynet-db:
