@@ -1,6 +1,6 @@
 version: "3.8"
 services:
-  web:
+  application:
     build:
       context: ./frontend
       dockerfile: Dockerfile
@@ -10,17 +10,21 @@ services:
     networks:
       - mynet-app
 
-  app:
+  api:
     restart: always
     build:
       context: ./backend
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
-    env_file:
-      - ./backend/.env
-    # environment:
-    #   - NODE_ENV=development
+    # env_file:
+    #   - ./backend/.env
+    environment:
+      - POSTGRES_HOST=db
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=mypassword
     links:
       - db
     networks:
@@ -32,8 +36,8 @@ services:
     env_file:
       - ./backend/.env
     # environment:
-    #   # - POSTGRES_DB=postgres
-    #   # - POSTGRES_USER=postgres
+    #   - POSTGRES_DB=postgres
+    #   - POSTGRES_USER=postgres
     #   - POSTGRES_PASSWORD=mypassword
     ports:
       - "2345:5432"
