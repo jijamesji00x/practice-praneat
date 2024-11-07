@@ -5,8 +5,8 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     ports:
-      - 8080:8080
-      - 80:80
+      - "8080:80"
+      - "80:80"
     networks:
       - mynet-app
 
@@ -36,7 +36,7 @@ services:
     #   # - POSTGRES_USER=postgres
     #   - POSTGRES_PASSWORD=mypassword
     ports:
-      - 5432:5432
+      - "2345:5432"
     volumes:
       - ./sql_scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
