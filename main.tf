@@ -13,13 +13,13 @@ terraform {
 
 # 2. สร้าง Resource
 # เราจะสร้าง resource ประเภท "local_file"
-resource "local_file" "hello_world" {
+resource "local_file" "hello_world_1" {
   # เนื้อหาที่จะใส่เข้าไปในไฟล์
   content = "Hello, Atlantis and Terraform! This file was created automatically."
 
   # ชื่อและตำแหน่งของไฟล์ที่จะสร้าง
   # ${path.module} หมายถึงให้สร้างในโฟลเดอร์เดียวกันกับไฟล์ .tf นี้
-  filename = "${path.module}/hello.txt"
+  filename = "${path.module}/hello_1.txt"
 }
 
 resource "local_file" "hello_world_2" {
